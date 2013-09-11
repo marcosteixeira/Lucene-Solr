@@ -43,3 +43,6 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem 'ferret'  
+gem 'acts_as_ferret'
+gem 'pdf-reader'

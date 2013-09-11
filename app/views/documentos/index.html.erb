@@ -1,0 +1,12 @@
+<%= form_for @documento do |f| %>
+  <%= f.file_field :pdf %>
+  <%= f.submit %>
+<% end %>
+
+
+<% @documentos.each do |documento| %>
+	<ul>
+		<li><%= documento.nome%></li>
+		<li><%= documento.conteudo%></li>
+	</ul>
+<% end %>
