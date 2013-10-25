@@ -5,7 +5,13 @@ class DocumentosController < ApplicationController
   # GET /documentos
   # GET /documentos.json
   def index
-    @documentos = Documento.find_with_ferret("USCIS")  
+
+    if params[:search]
+      @documentos = Documento.find_with_ferret(params[:search])
+    else
+      @documentos = Documento.all
+    end
+
     @documento = Documento.new
   end
 
@@ -30,13 +36,13 @@ class DocumentosController < ApplicationController
     @documento = Documento.new
     @documento.nome = uploaded_io.original_filename
     @documento.conteudo = ""
-    
 
-      reader = PDF::Reader.new(uploaded_io.tempfile)
-      reader.pages.each do |page|
-        @documento.conteudo << page.text
-      end
-    
+
+    reader = PDF::Reader.new(uploaded_io.tempfile)
+    reader.pages.each do |page|
+      @documento.conteudo << page.text
+    end
+
     respond_to do |format|
       if @documento.save
         format.html { redirect_to @documento, notice: 'Documento was successfully created.' }
@@ -71,16 +77,16 @@ class DocumentosController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_documento
-      @documento = Documento.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_documento
+    @documento = Documento.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def documento_params
-      params.require(:documento).permit(:nome, :conteudo, :pdf)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def documento_params
+    params.require(:documento).permit(:nome, :conteudo, :pdf)
+  end
 end

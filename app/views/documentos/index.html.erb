@@ -1,12 +1,20 @@
+<%= form_tag(documentos_path, :method => "get", id: "search-form") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+
+    <input type="submit"/>
+
+<% end %>
+
+<br/>
 <%= form_for @documento do |f| %>
-  <%= f.file_field :pdf %>
-  <%= f.submit %>
+    <%= f.file_field :pdf %>
+    <%= f.submit %>
 <% end %>
 
 
 <% @documentos.each do |documento| %>
-	<ul>
-		<li><%= documento.nome%></li>
-		<li><%= documento.conteudo%></li>
-	</ul>
+    <ul>
+      <li><%= documento.nome %></li>
+      <li><%= documento.conteudo %></li>
+    </ul>
 <% end %>
